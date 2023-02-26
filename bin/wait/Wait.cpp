@@ -21,12 +21,15 @@ Wait::Result Wait::exec()
     int pid = 0;
     int status;
 
+    // if PID is invalid (less than 0) return error
     if (((pid=atoi(arguments().get("PID")))<0)) {
         ERROR("PID '"<<arguments().get("PID")<<"' not found...");
         return NotFound;
     }
 
+    // call waitpid
     waitpid(pid, &status, 0);
 
+    // done
     return Success;
 }
