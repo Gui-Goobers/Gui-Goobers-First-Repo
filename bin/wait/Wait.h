@@ -2,6 +2,10 @@
 #define __BIN_WAIT_WAIT_H
 
 #include <POSIXApplication.h>
+#include <FreeNOS/User.h>
+#include "sys/wait.h"
+#include "sys/types.h"
+#include <errno.h>
 
 /**
  * @addtogroup bin
