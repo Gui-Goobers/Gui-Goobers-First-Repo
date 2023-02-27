@@ -19,6 +19,9 @@
 #include "sys/wait.h"
 #include "sys/types.h"
 #include <errno.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 
 pid_t waitpid(pid_t pid, int *stat_loc, int options)
 {
@@ -28,6 +31,7 @@ pid_t waitpid(pid_t pid, int *stat_loc, int options)
     {
         case API::NotFound:
             errno = ESRCH;
+            ERROR("Can not wait : "<<strerror(errno));
             return (pid_t) -1;
 
         case API::Success:
