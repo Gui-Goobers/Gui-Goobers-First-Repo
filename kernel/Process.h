@@ -71,6 +71,15 @@ class Process
         Stopped
     };
 
+    enum PriorityLevel
+    {
+      Min=1,
+      Lower=2,
+      DefaultPriority=3,
+      Higher=4,
+      Max=5
+    };
+
   public:
 
     /**
@@ -148,6 +157,16 @@ class Process
      * @return True if equal, false otherwise.
      */
     bool operator == (Process *proc);
+
+    /** 
+     * Get Priority
+     */
+    PriorityLevel getPriority() const;
+
+    /**
+     * Set priority level.
+    */
+    void setPriority(PriorityLevel);
 
   protected:
 
@@ -257,6 +276,9 @@ class Process
 
     /** Wait exit result of the other Process. */
     uint m_waitResult;
+
+    /** Priority Level */
+    PriorityLevel m_priority;
 
     /** Privilege level */
     bool m_privileged;

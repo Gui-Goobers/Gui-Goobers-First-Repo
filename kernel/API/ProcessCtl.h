@@ -40,6 +40,7 @@ typedef enum ProcessOperation
     KillPID,
     GetPID,
     GetParent,
+    GetPriority,
     WatchIRQ,
     EnableIRQ,
     DisableIRQ,
@@ -54,8 +55,7 @@ typedef enum ProcessOperation
     Stop,
     Resume,
     Reset
-}
-ProcessOperation;
+} ProcessOperation;
 
 /**
  * Process information structure, used for Info.
@@ -70,8 +70,10 @@ typedef struct ProcessInfo
 
     /** Defines the current state of the Process. */
     Process::State state;
-}
-ProcessInfo;
+
+    /** Defines priority. */
+    PriorityLevel priorityLevel;
+} ProcessInfo;
 
 /** Operator to print a ProcessOperation to a Log */
 Log & operator << (Log &log, ProcessOperation op);
