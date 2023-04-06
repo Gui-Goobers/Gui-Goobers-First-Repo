@@ -41,6 +41,7 @@ typedef enum ProcessOperation
     GetPID,
     GetParent,
     GetPriority,
+    SetPriority,
     WatchIRQ,
     EnableIRQ,
     DisableIRQ,
@@ -71,12 +72,12 @@ typedef struct ProcessInfo
     /** Defines the current state of the Process. */
     Process::State state;
 
-    /** Defines priority. */
     PriorityLevel priorityLevel;
+    
 } ProcessInfo;
 
 /** Operator to print a ProcessOperation to a Log */
-Log & operator << (Log &log, ProcessOperation op);
+Log &operator<<(Log &log, ProcessOperation op);
 
 /**
  * Prototype for user applications. Process management related operations.
@@ -97,7 +98,7 @@ inline API::Result ProcessCtl(const ProcessID proc,
                               const Address addr = 0,
                               const Address output = 0)
 {
-    return (API::Result) trapKernel4(API::ProcessCtlNumber, proc, op, addr, output);
+    return (API::Result)trapKernel4(API::ProcessCtlNumber, proc, op, addr, output);
 }
 
 /**

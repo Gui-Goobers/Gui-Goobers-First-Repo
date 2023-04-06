@@ -1,16 +1,18 @@
+#include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include <errno.h>
 #include <unistd.h>
-#include <ProcessClient.h>
+#include <FreeNOS/User.h>
 #include "Renice.h"
 
 Renice::Renice(int argc, char **argv)
     : POSIXApplication(argc, argv)
 {
-    parser().setDescription("Change the priority of a process");
-    parser().registerFlag('n', "new", "Changes process priority");
-    parser().registerPositional("PRIO", "The new priority for the process");
-    parser().registerPositional("PID", "The ID of the process to change the priority of");
+    parser().setDescription("Changes a process's priority level");
+    parser().registerFlag('n', "priorityn", "priority level flag");
+    parser().registerPositional("priority", "set priority level");
+    parser().registerPositional("pid", "ID of the process to change priority for");
 }
 
 Renice::~Renice()
@@ -19,30 +21,25 @@ Renice::~Renice()
 
 Renice::Result Renice::exec()
 {
-    if (arguments().get("new")){
 
-        int prio = atoi(arguments().get("PRIO"));
-        int pid = atoi(arguments().get("PID"));
+    PriorityLevel priority = atoi(arguments().get("priority"));
+    if (priority < 1 || priority > 5)
+    {
+        ERROR("Invalid priority level");
+        return InvalidArgument;
+    }
 
-        const ProcessClient process;
-        ProcessClient::Info info;
+    pid_t pid = atoi(arguments().get("pid"));
+    if (pid <= 0)
+    {
+        ERROR("Invalid process id");
+        return InvalidArgument;
+    }
 
-        // Make sure the process is valid
-        const ProcessClient::Result result = process.processInfo(pid, info);
-        if (result == ProcessClient::Success)
-        {
-            // Valid process
-            if(renice(pid, prio)) 
-            {
-                ERROR("failed to change priority: " << strerror(errno));
-                return IOError;
-            }
-        }
+    if (changePriority(pid, priority, 0) != pid)
+    {
+        ERROR("Renice failed");
+        return IOError;
+    }
 
-        else
-        {
-            // Invalid process - return an error
-            ERROR("invalid process id: " << arguments().get("PID") << "'");
-            return IOError;
-        }
 }

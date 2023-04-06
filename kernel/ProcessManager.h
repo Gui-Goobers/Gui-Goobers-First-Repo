@@ -84,6 +84,8 @@ class ProcessManager
                      const bool readyToRun = false,
                      const bool privileged = false);
 
+
+
     /**
      * Retrieve a Process by it's ID.
      *
@@ -209,9 +211,8 @@ class ProcessManager
      */
     Process * current();
 
-  private:
-
-    /**
+public:
+/**
      * Place the given process on the Schedule queue
      *
      * @param proc Process pointer
