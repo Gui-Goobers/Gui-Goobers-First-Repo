@@ -1,10 +1,12 @@
-Project 2 Wait For It
+Project 3 Prioritize It
 
 CS4310
 
-Tristen Bizzaro
-Ryley Gonzales
+Tristen Bizzaro - Renice, Slowcalc
+Ryley Gonzales - Renice, Scheduler 
+
+Slowcalc values for testing are lowered due to VM running time taking longer.
 
 Video Link:
 
-https://youtu.be/93RKfQUcmrc
+https://youtu.be/bS0MudLyGyM
